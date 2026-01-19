@@ -29,6 +29,16 @@ public class PlayerController : MonoBehaviour
         }
 
         rb.linearVelocity = new Vector2(key * walkSpeed, rb.linearVelocity.y);
+
+        //画面端処理
+        if(transform.position.x < -5.0f)
+        {
+            transform.position = new Vector2(5.0f, transform.position.y);
+        }
+        if(transform.position.x > 5.0f)
+        {
+            transform.position = new Vector2(-5.0f, transform.position.y);
+        }
     }
 
     void FixedUpdate()
@@ -54,5 +64,12 @@ public class PlayerController : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         isGrounded = true;
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("当たった");
+        GameObject director = GameObject.Find("gameDirector");
+        director.GetComponent<gameDirector>().result();
     }
 }
